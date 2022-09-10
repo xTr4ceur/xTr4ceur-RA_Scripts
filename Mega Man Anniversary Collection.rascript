@@ -118,14 +118,14 @@ function MgBustChev(actStgID, bNL, bDV){
             never(ctrlSelect > prev(ctrlSelect)) &&
             actGame == 0x01 &&             
             tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossScreen[actStgID] - 1 && mm1StageScreenID == mm1BossScreen[actStgID])) &&
-            repeated(0, (mm1BossHP == 0x00 && trigger_when(mm1BossState == bDV)))&& (
-                never(mm1CutManPwr < prev(mm1CutManPwr)) &&
-                never(mm1IceManPwr < prev(mm1IceManPwr)) &&
-                never(mm1BombManPwr < prev(mm1BombManPwr)) &&
-                never(mm1FireManPwr < prev(mm1FireManPwr)) &&
-                never(mm1ElecManPwr < prev(mm1ElecManPwr)) &&
-                never(mm1GutsManPwr < prev(mm1GutsManPwr)) &&
-                never(mm1MagnetBm < prev(mm1MagnetBm)) ||
+            repeated(0, (mm1BossHP == 0x00 && trigger_when(mm1BossState == bDV)))&& (            
+                never(mm1CutManShot < prev(mm1CutManShot)) &&                
+                never(mm1IceManShot < prev(mm1IceManShot)) &&
+                never(mm1BombManShot < prev(mm1BombManShot)) &&
+                never(mm1FireManShot < prev(mm1FireManShot)) &&
+                never(mm1ElecManShot < prev(mm1ElecManShot)) &&
+                never(mm1GutsManShot < prev(mm1GutsManShot)) &&
+                never(mm1MagnetBeam < prev(mm1MagnetBeam)) ||
                 always_false()
             )
     )
@@ -223,13 +223,13 @@ mm1BossHP = byte(0xb62219)
 mm1BossState = byte(0x19a428)
 
 // *    Weapon Quanitity -> Variable
-mm1CutManPwr = byte(0x2000b03)
-mm1IceManPwr = byte(0x2000b04)
-mm1BombManPwr = byte(0x2000b05)
-mm1FireManPwr = byte(0x2000b06)
-mm1ElecManPwr = byte(0x2000b07)
-mm1GutsManPwr = byte(0x2000b08)
-mm1MagnetBm = byte(0x2000b09)
+mm1CutManShot = byte(0x2000b03)
+mm1IceManShot = byte(0x2000b04)
+mm1BombManShot = byte(0x2000b05)
+mm1FireManShot = byte(0x2000b06)
+mm1ElecManShot = byte(0x2000b07)
+mm1GutsManShot = byte(0x2000b08)
+mm1MagnetBeam = byte(0x2000b09)
 
 
 /////////////
@@ -237,17 +237,35 @@ mm1MagnetBm = byte(0x2000b09)
 /////////////////////////////////////
 
 for counter in range(0, mm1BossRange){
-    if(counter == mm1BossRange){    
-        StageClearCheevo(counter, 0x01, mm1StageID, mm1StageScreenID, mm1BossStartScreenID[2], mm1RespawnFlg, 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen)
+    if(counter == mm1BossRange){            // Dr. Wily - Final Stage   
+        StageClearCheevo(
+            counter, 
+            0x01, 
+            mm1StageID, mm1StageScreenID, 
+            mm1BossStartScreenID[2], mm1RespawnFlg, 
+            0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+        )
         MgBustChev(counter, mm1BossNames, mm1BossDefeatValue[0]) 
         DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[0])  
     } 
     else{    
-        if(counter >= 0 && counter <= 5){
-            StageClearCheevo(counter, 0x01, mm1StageID, mm1StageScreenID, mm1BossStartScreenID[0], mm1RespawnFlg, 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen)
+        if(counter >= 0 && counter <= 5){   // Robot Master Stages
+            StageClearCheevo(
+                counter, 
+                0x01, 
+                mm1StageID, mm1StageScreenID, 
+                mm1BossStartScreenID[0], mm1RespawnFlg, 
+                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen
+            )
         }   
-        else{        
-            StageClearCheevo(counter, 0x01, mm1StageID, mm1StageScreenID, mm1BossStartScreenID[1], mm1RespawnFlg, 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen)
+        else{                               // Dr. Wily - Stage 1-3
+            StageClearCheevo(
+                counter, 
+                0x01, 
+                mm1StageID, mm1StageScreenID, 
+                mm1BossStartScreenID[1], mm1RespawnFlg, 
+                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+            )
         }        
         MgBustChev(counter, mm1BossNames, mm1BossDefeatValue[1]) 
         DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[1])
