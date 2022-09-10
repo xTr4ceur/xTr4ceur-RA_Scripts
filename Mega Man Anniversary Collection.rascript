@@ -95,7 +95,7 @@ function StageClearCheevo(
                         bossNameList, bossHP, bossHPDead, bossState, bossDefeatValue, bossScreen
                     ){                      
     achievement(
-        title = mmVersion[0] + bossNameList[counter],
+        title = mmVersion[selectedGame - 1] + bossNameList[counter],
         description = StageClearDescription(counter, bossNameList), 
         points = 1,
         trigger = 
@@ -109,26 +109,58 @@ function StageClearCheevo(
 
 
 // *    Mega Buster Only Achievement
-function MgBustChev(actStgID, bNL, bDV){
-    achievement(    
-        title = mmVersion[0] + "Mega Buster " + bNL[actStgID],
-        description = MegaBusterDescription(actStgID, bNL),
-        points = 1,
-        trigger = 
-            never(ctrlSelect > prev(ctrlSelect)) &&
-            actGame == 0x01 &&             
-            tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossScreen[actStgID] - 1 && mm1StageScreenID == mm1BossScreen[actStgID])) &&
-            repeated(0, (mm1BossHP == 0x00 && trigger_when(mm1BossState == bDV)))&& (            
-                never(mm1CutManShot < prev(mm1CutManShot)) &&                
-                never(mm1IceManShot < prev(mm1IceManShot)) &&
-                never(mm1BombManShot < prev(mm1BombManShot)) &&
-                never(mm1FireManShot < prev(mm1FireManShot)) &&
-                never(mm1ElecManShot < prev(mm1ElecManShot)) &&
-                never(mm1GutsManShot < prev(mm1GutsManShot)) &&
-                never(mm1MagnetBeam < prev(mm1MagnetBeam)) ||
-                always_false()
-            )
-    )
+function MegaBusterCheevo(
+                        counter,                           
+                        selectedGame,                          
+                        stageID, screenID,                         
+                        bossNameList, bossHP, bossHPDead, bossState, bossDefeatValue, bossScreen,                        
+                        weaponQuantity
+                    ){ 
+    if(selectedGame == 0x01){
+        achievement(    
+            title = mmVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
+            description = MegaBusterDescription(counter, bossNameList),
+            points = 1,
+            trigger =         
+                never(ctrlSelect > prev(ctrlSelect)) &&
+                actGame == selectedGame &&             
+                tally(1, (stageID == counter && prev(screenID) == bossScreen[counter] - 1 && screenID == bossScreen[counter])) &&
+                repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue)))&& (        
+                        never(weaponQuantity[0] < prev(weaponQuantity[0])) &&                
+                        never(weaponQuantity[1] < prev(weaponQuantity[1])) &&
+                        never(weaponQuantity[2] < prev(weaponQuantity[2])) &&
+                        never(weaponQuantity[3] < prev(weaponQuantity[3])) &&
+                        never(weaponQuantity[4] < prev(weaponQuantity[4])) &&
+                        never(weaponQuantity[5] < prev(weaponQuantity[5])) &&
+                        never(weaponQuantity[6] < prev(weaponQuantity[6])) || 
+                        always_false()        
+                )
+        )  
+    }
+    else if(selectedGame > 0x01){
+       achievement(    
+            title = mmVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
+            description = MegaBusterDescription(counter, bossNameList),
+            points = 1,
+            trigger =         
+                never(ctrlSelect > prev(ctrlSelect)) &&
+                actGame == selectedGame &&             
+                tally(1, (stageID == counter && prev(screenID) == bossScreen[counter] - 1 && screenID == bossScreen[counter])) &&
+                repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue)))&& (        
+                        never(weaponQuantity[0] < prev(weaponQuantity[0])) &&                
+                        never(weaponQuantity[1] < prev(weaponQuantity[1])) &&
+                        never(weaponQuantity[2] < prev(weaponQuantity[2])) &&
+                        never(weaponQuantity[3] < prev(weaponQuantity[3])) &&
+                        never(weaponQuantity[4] < prev(weaponQuantity[4])) &&
+                        never(weaponQuantity[5] < prev(weaponQuantity[5])) &&
+                        never(weaponQuantity[6] < prev(weaponQuantity[6])) &&
+                        never(weaponQuantity[7] < prev(weaponQuantity[7])) &&
+                        never(weaponQuantity[8] < prev(weaponQuantity[8])) ||
+                        always_false()        
+                )
+        ) 
+    }
+    
 }
 
 
@@ -223,13 +255,15 @@ mm1BossHP = byte(0xb62219)
 mm1BossState = byte(0x19a428)
 
 // *    Weapon Quanitity -> Variable
-mm1CutManShot = byte(0x2000b03)
-mm1IceManShot = byte(0x2000b04)
-mm1BombManShot = byte(0x2000b05)
-mm1FireManShot = byte(0x2000b06)
-mm1ElecManShot = byte(0x2000b07)
-mm1GutsManShot = byte(0x2000b08)
-mm1MagnetBeam = byte(0x2000b09)
+mm1Weapon = [
+    byte(0x2000b03),    // Cut Man
+    byte(0x2000b04),    // Ice Man
+    byte(0x2000b05),    // Bomb Man
+    byte(0x2000b06),    // Fire Man
+    byte(0x2000b07),    // Elec Man
+    byte(0x2000b08),    // Guts Man
+    byte(0x2000b09)     // Magnet Beam
+]
 
 
 /////////////
@@ -237,19 +271,27 @@ mm1MagnetBeam = byte(0x2000b09)
 /////////////////////////////////////
 
 for counter in range(0, mm1BossRange){
-    if(counter == mm1BossRange){            // Dr. Wily - Final Stage   
+// *    Dr. Wily - Final Stage 
+    if(counter == mm1BossRange){    
         StageClearCheevo(
             counter, 
             0x01, 
             mm1StageID, mm1StageScreenID, 
-            mm1BossStartScreenID[2], mm1RespawnFlg, 
-            0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+            mm1BossStartScreenID[2], mm1RespawnFlg, 0xf0, 
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
         )
-        MgBustChev(counter, mm1BossNames, mm1BossDefeatValue[0]) 
+        MegaBusterCheevo(
+            counter, 
+            0x01,
+            mm1StageID, mm1StageScreenID,
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen,
+            mm1Weapon
+        )
         DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[0])  
     } 
+// *    Robot Master Stages
     else{    
-        if(counter >= 0 && counter <= 5){   // Robot Master Stages
+        if(counter >= 0 && counter <= 5){
             StageClearCheevo(
                 counter, 
                 0x01, 
@@ -257,8 +299,9 @@ for counter in range(0, mm1BossRange){
                 mm1BossStartScreenID[0], mm1RespawnFlg, 
                 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen
             )
-        }   
-        else{                               // Dr. Wily - Stage 1-3
+        }
+// *    Dr. Wily - Stage 1-3
+        else{                               
             StageClearCheevo(
                 counter, 
                 0x01, 
@@ -267,7 +310,13 @@ for counter in range(0, mm1BossRange){
                 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
             )
         }        
-        MgBustChev(counter, mm1BossNames, mm1BossDefeatValue[1]) 
+        MegaBusterCheevo(
+            counter, 
+            0x01,
+            mm1StageID, mm1StageScreenID,
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen,
+            mm1Weapon
+        ) 
         DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[1])
     }       
 }
