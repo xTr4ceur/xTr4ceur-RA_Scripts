@@ -230,15 +230,15 @@ mm1BossNames = [
     "CWU-01P", 
     "Wily Machine #1"
 ]              
-mm1BossDefeatValue = [
-    0x0d,   // Wily beaten
-    0x0f    // Boss beaten/Boss Item collected
-] 
-mm1BossStartScreenID = [
-    0x00,   // Robot Master Stages
-    0x18,   // Wily Stage 1 - 3
-    0x14    // Final Wily Stage
-]
+mm1BossDefeatValue = {
+    "Wily": 0x0d,
+    "Boss beaten": 0x0f
+}
+mm1StartScreenID = {
+    "Robot Master": 0x00,
+    "Pre Wily": 0x18,
+    "Wily": 0x14
+}
 mm1BossScreen = [
     0x17,   // Cut Man
     0x17,   // Ice Man
@@ -291,15 +291,15 @@ for counter in range(0, mm1BossRange){
             counter, 
             0x01, 
             mm1StageID, mm1StageScreenID, 
-            mm1BossStartScreenID[2], mm1RespawnFlg, 0xf0, 
-            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+            mm1StartScreenID["Wily"], mm1RespawnFlg, 0xf0, 
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Wily"], mm1BossScreen
         )
         MegaBusterCheevo(
             10,
             counter, 
             0x01,
             mm1StageID, mm1StageScreenID,
-            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen,
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Wily"], mm1BossScreen,
             mm1Weapon
         )
         DamagelesssBossCheevo(
@@ -308,7 +308,7 @@ for counter in range(0, mm1BossRange){
             0x01,
             mm1StageID, mm1StageScreenID,
             mm1PlayerHP,
-            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Wily"], mm1BossScreen
         )  
     } 
 // *    Robot Master Stages
@@ -319,8 +319,8 @@ for counter in range(0, mm1BossRange){
                 counter, 
                 0x01, 
                 mm1StageID, mm1StageScreenID, 
-                mm1BossStartScreenID[0], mm1RespawnFlg, 
-                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen
+                mm1StartScreenID["Robot Master"], mm1RespawnFlg, 
+                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
             )
         }
 // *    Dr. Wily - Stage 1-3
@@ -330,8 +330,8 @@ for counter in range(0, mm1BossRange){
                 counter, 
                 0x01, 
                 mm1StageID, mm1StageScreenID, 
-                mm1BossStartScreenID[1], mm1RespawnFlg, 
-                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+                mm1StartScreenID["Pre Wily"], mm1RespawnFlg, 
+                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
             )
         }        
         MegaBusterCheevo(
@@ -339,7 +339,7 @@ for counter in range(0, mm1BossRange){
             counter, 
             0x01,
             mm1StageID, mm1StageScreenID,
-            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen,
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen,
             mm1Weapon
         ) 
         DamagelesssBossCheevo(
@@ -348,7 +348,7 @@ for counter in range(0, mm1BossRange){
             0x01,
             mm1StageID, mm1StageScreenID,
             mm1PlayerHP,
-            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
         )
     }       
 }
