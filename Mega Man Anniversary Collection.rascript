@@ -108,7 +108,7 @@ function StageClearCheevo(
 }
 
 
-// *    Mega Buster Only Achievement
+// *    Mega Buster Achievement
 function MegaBusterCheevo(
                         counter,                           
                         selectedGame,                          
