@@ -91,6 +91,7 @@ function DamagelessBossDescription(counter, bossNameList){
 
 // *    Stage Clear Achievement
 function StageClearCheevo(
+                        cheevoPoints,
                         counter,                     
                         selectedGame,                     
                         stageID, screenID, startScreenID,
@@ -100,7 +101,7 @@ function StageClearCheevo(
     achievement(
         title = megaManVersion[selectedGame - 1] + bossNameList[counter],
         description = StageClearDescription(counter, bossNameList), 
-        points = 1,
+        points = cheevoPoints,
         trigger = 
             never(control["Select"] > prev(control["Select"])) &&
             tally(1, actualGame == selectedGame && stageID == counter && screenID == startScreenID && megaManRespawnFlag == selectedRespawnFlag) &&            
@@ -114,6 +115,7 @@ function StageClearCheevo(
 
 // *    Mega Buster Achievement
 function MegaBusterCheevo(
+                        cheevoPoints,
                         counter,                           
                         selectedGame,                          
                         stageID, screenID,                         
@@ -124,7 +126,7 @@ function MegaBusterCheevo(
         achievement(    
             title = megaManVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
             description = MegaBusterDescription(counter, bossNameList),
-            points = 1,
+            points = cheevoPoints,
             trigger =         
                 never(control["Select"] > prev(control["Select"])) &&
                 actualGame == selectedGame &&             
@@ -145,7 +147,7 @@ function MegaBusterCheevo(
        achievement(    
             title = megaManVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
             description = MegaBusterDescription(counter, bossNameList),
-            points = 1,
+            points = cheevoPoints,
             trigger =         
                 never(control["Select"] > prev(control["Select"])) &&
                 actualGame == selectedGame &&             
@@ -170,6 +172,7 @@ function MegaBusterCheevo(
 
 // *    Damageless Boss Achievement
 function DamagelesssBossCheevo(
+                        cheevoPoints,
                         counter,                           
                         selectedGame,                          
                         stageID, screenID,  
@@ -179,7 +182,7 @@ function DamagelesssBossCheevo(
     achievement(
         title = megaManVersion[selectedGame - 1] + "Damageless " + bossNameList[counter],    
         description = DamagelessBossDescription(counter, bossNameList), 
-        points = 1,
+        points = cheevoPoints,
         trigger = 
             never(control["Select"] > prev(control["Select"])) &&
             never(megaManHP < prev(megaManHP)) &&
@@ -284,6 +287,7 @@ for counter in range(0, mm1BossRange){
 // *    Dr. Wily - Final Stage 
     if(counter == mm1BossRange){    
         StageClearCheevo(
+            10,
             counter, 
             0x01, 
             mm1StageID, mm1StageScreenID, 
@@ -291,6 +295,7 @@ for counter in range(0, mm1BossRange){
             mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
         )
         MegaBusterCheevo(
+            10,
             counter, 
             0x01,
             mm1StageID, mm1StageScreenID,
@@ -298,6 +303,7 @@ for counter in range(0, mm1BossRange){
             mm1Weapon
         )
         DamagelesssBossCheevo(
+            25,
             counter,            
             0x01,
             mm1StageID, mm1StageScreenID,
@@ -309,6 +315,7 @@ for counter in range(0, mm1BossRange){
     else{    
         if(counter >= 0 && counter <= 5){
             StageClearCheevo(
+                5,
                 counter, 
                 0x01, 
                 mm1StageID, mm1StageScreenID, 
@@ -319,6 +326,7 @@ for counter in range(0, mm1BossRange){
 // *    Dr. Wily - Stage 1-3
         else{                               
             StageClearCheevo(
+                5,
                 counter, 
                 0x01, 
                 mm1StageID, mm1StageScreenID, 
@@ -327,6 +335,7 @@ for counter in range(0, mm1BossRange){
             )
         }        
         MegaBusterCheevo(
+            10,
             counter, 
             0x01,
             mm1StageID, mm1StageScreenID,
@@ -334,6 +343,7 @@ for counter in range(0, mm1BossRange){
             mm1Weapon
         ) 
         DamagelesssBossCheevo(
+            10,
             counter, 
             0x01,
             mm1StageID, mm1StageScreenID,
