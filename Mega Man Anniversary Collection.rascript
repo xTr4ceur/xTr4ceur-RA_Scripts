@@ -63,7 +63,7 @@ ctrlSelect = bit0(0x16e611)
 /////////////////////////////////////
 
 // *    Stage Clear Achievements
-function StgClrDesc(counter, bossNameList){
+function StageClearDescription(counter, bossNameList){
     actDesc = "Beat " + bossNameList[counter]
     return actDesc
 }
@@ -87,17 +87,23 @@ function DmgsBsDesc(counter, bossNameList){
 /////////////////////////////////////
 
 // *    Stage Clear Achievement
-function StgClrChev(counter, currentStgScrID, bossNameList, bDV, sSID){
+function StageClearCheevo(
+                        counter,                     
+                        selectedGame,                     
+                        stageID, screenID, startScreenID,
+                        megaManRespawnFlag, selectedRespawnFlag, 
+                        bossNameList, bossHP, bossHPDead, bossState, bossDefeatValue, bossScreen
+                    ){                      
     achievement(
         title = mmVersion[0] + bossNameList[counter],
-        description = StgClrDesc(counter, bossNameList), 
+        description = StageClearDescription(counter, bossNameList), 
         points = 1,
         trigger = 
             never(ctrlSelect > prev(ctrlSelect)) &&
-            tally(1, actGame == 0x01 && mm1StageID == counter && mm1StageScreenID == sSID && mm1RespawnFlg == 0xf0) &&            
-            currentStgScrID == currentStgScrID[counter] &&            
-            mm1BossHP == 0x00 &&
-            mm1BossState == bDV
+            tally(1, actGame == selectedGame && stageID == counter && screenID == startScreenID && megaManRespawnFlag == selectedRespawnFlag) &&            
+            screenID == bossScreen[counter] &&            
+            bossHP == bossHPDead &&
+            bossState == bossDefeatValue
     )
 }
 
@@ -111,7 +117,7 @@ function MgBustChev(actStgID, bNL, bDV){
         trigger = 
             never(ctrlSelect > prev(ctrlSelect)) &&
             actGame == 0x01 &&             
-            tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossStgScrID[actStgID] - 1 && mm1StageScreenID == mm1BossStgScrID[actStgID])) &&
+            tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossScreen[actStgID] - 1 && mm1StageScreenID == mm1BossScreen[actStgID])) &&
             repeated(0, (mm1BossHP == 0x00 && trigger_when(mm1BossState == bDV)))&& (
                 never(mm1CutManPwr < prev(mm1CutManPwr)) &&
                 never(mm1IceManPwr < prev(mm1IceManPwr)) &&
@@ -136,7 +142,7 @@ function DmgsBsChev(actStgID, bNL, bDV){
             never(ctrlSelect > prev(ctrlSelect)) &&
             never(mm1PlayerHP < prev(mm1PlayerHP)) &&
             actGame == 0x01 &&             
-            tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossStgScrID[actStgID] - 1 && mm1StageScreenID == mm1BossStgScrID[actStgID])) &&
+            tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossScreen[actStgID] - 1 && mm1StageScreenID == mm1BossScreen[actStgID])) &&
             repeated(0, (mm1BossHP == 0x00 && trigger_when(mm1BossState == bDV)))            
     )
 }
@@ -183,12 +189,12 @@ mm1BossDefeatValue = [
     0x0d,   // Wily beaten
     0x0f    // Boss beaten/Boss Item collected
 ] 
-mm1BossStartStgScrID = [
+mm1BossStartScreenID = [
     0x00,   // Robot Master Stages
     0x18,   // Wily Stage 1 - 3
     0x14    // Final Wily Stage
 ]
-mm1BossStgScrID = [
+mm1BossScreen = [
     0x17,   // Cut Man
     0x17,   // Ice Man
     0x17,   // Bomb Man
@@ -231,17 +237,17 @@ mm1MagnetBm = byte(0x2000b09)
 /////////////////////////////////////
 
 for counter in range(0, mm1BossRange){
-    if(counter == mm1BossRange){
-        StgClrChev(counter, mm1BossNames, mm1BossDefeatValue[0], mm1BossStartStgScrID[2]) 
+    if(counter == mm1BossRange){    
+        StageClearCheevo(counter, 0x01, mm1StageID, mm1StageScreenID, mm1BossStartScreenID[2], mm1RespawnFlg, 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen)
         MgBustChev(counter, mm1BossNames, mm1BossDefeatValue[0]) 
         DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[0])  
     } 
     else{    
         if(counter >= 0 && counter <= 5){
-            StgClrChev(counter, mm1BossNames, mm1BossDefeatValue[1], mm1BossStartStgScrID[0]) 
-        }        
-        else{
-            StgClrChev(counter, mm1BossNames, mm1BossDefeatValue[1], mm1BossStartStgScrID[1])
+            StageClearCheevo(counter, 0x01, mm1StageID, mm1StageScreenID, mm1BossStartScreenID[0], mm1RespawnFlg, 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen)
+        }   
+        else{        
+            StageClearCheevo(counter, 0x01, mm1StageID, mm1StageScreenID, mm1BossStartScreenID[1], mm1RespawnFlg, 0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen)
         }        
         MgBustChev(counter, mm1BossNames, mm1BossDefeatValue[1]) 
         DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[1])
