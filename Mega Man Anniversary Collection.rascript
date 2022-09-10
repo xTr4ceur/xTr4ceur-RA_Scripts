@@ -69,14 +69,14 @@ function StageClearDescription(counter, bossNameList){
 }
 
 // *    Mega Buster Only Achievement
-function MgBustDesc(counter, bossNameList){
+function MegaBusterDescription(counter, bossNameList){
     actDesc = "Beat" + bossNameList[counter] + " with Mega Buster only"
     return actDesc
 }
 
 
 // *    Damageless Boss Achievement
-function DmgsBsDesc(counter, bossNameList){
+function DamagelessBossDescription(counter, bossNameList){
     actDesc = "Beat " + bossNameList[counter] + " without being harmed"
     return actDesc
 }
@@ -112,7 +112,7 @@ function StageClearCheevo(
 function MgBustChev(actStgID, bNL, bDV){
     achievement(    
         title = mmVersion[0] + "Mega Buster " + bNL[actStgID],
-        description = MgBustDesc(actStgID, bNL),
+        description = MegaBusterDescription(actStgID, bNL),
         points = 1,
         trigger = 
             never(ctrlSelect > prev(ctrlSelect)) &&
@@ -136,7 +136,7 @@ function MgBustChev(actStgID, bNL, bDV){
 function DmgsBsChev(actStgID, bNL, bDV){
     achievement(
         title = mmVersion[0] + "Damageless " + bNL[actStgID],    
-        description = DmgsBsDesc(actStgID, bNL), 
+        description = DamagelessBossDescription(actStgID, bNL), 
         points = 1,
         trigger = 
             never(ctrlSelect > prev(ctrlSelect)) &&
