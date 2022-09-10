@@ -14,7 +14,7 @@
 // Global Variables               //
 ////////////////////////////////////
 
-mmVersion = [
+megaManVersion = [
     "[MM I] ",
     "[MM II] ",
     "[MM III] ",
@@ -33,29 +33,32 @@ mmVersion = [
 ////////////////////////////////////
 
 // Actual selected Game
-actGame = byte(0x16e488)
+actualGame = byte(0x16e488)
 
-// Digital Pad (Face buttons Left)
-ctrlDPadLeft = bit7(0x16e611)
-ctrlDPadRight = bit5(0x16e611)
-ctrlDPadUp = bit4(0x16e611)
-ctrlDPadDown = bit6(0x16e611)
 
-// Face Buttons Right
-ctrlCross = bit6(0x16e610)
-ctrlCircle = bit5(0x16e610)
-ctrlTriangle = bit4(0x16e610)
-ctrlSquare = bit7(0x16e610)
+control = {
+    // Digital Pad (Face buttons Left)
+    "Left": bit7(0x16e611),
+    "Right": bit5(0x16e611),
+    "Up": bit4(0x16e611),
+    "Down": bit6(0x16e611),
+     
+    // Face Buttons Right
+    "Cross": bit6(0x16e610),
+    "Circle": bit5(0x16e610),
+    "Triangle": bit4(0x16e610),
+    "Square": bit7(0x16e610),
 
-// Bumper + Trigger
-ctrlLeftBump = bit2(0x16e610)
-ctrlRightBump = bit3(0x16e610)
-ctrlLeftTrig = bit0(0x16e610)
-ctrlRightTrig = bit1(0x16e610)
+    // Bumper + Trigger
+    "Left Bumper": bit2(0x16e610),
+    "Right Bumper": bit3(0x16e610),
+    "Left Trigger": bit0(0x16e610),
+    "Right Trigger": bit1(0x16e610),
 
-// Start + Select
-ctrlStart = bit3(0x16e611)
-ctrlSelect = bit0(0x16e611)
+    // Start + Select
+    "Start": bit3(0x16e611),
+    "Select": bit0(0x16e611)   
+}
 
 
 /////////////////////////////
@@ -95,16 +98,17 @@ function StageClearCheevo(
                         bossNameList, bossHP, bossHPDead, bossState, bossDefeatValue, bossScreen
                     ){                      
     achievement(
-        title = mmVersion[selectedGame - 1] + bossNameList[counter],
+        title = megaManVersion[selectedGame - 1] + bossNameList[counter],
         description = StageClearDescription(counter, bossNameList), 
         points = 1,
         trigger = 
-            never(ctrlSelect > prev(ctrlSelect)) &&
-            tally(1, actGame == selectedGame && stageID == counter && screenID == startScreenID && megaManRespawnFlag == selectedRespawnFlag) &&            
+            never(control["Select"] > prev(control["Select"])) &&
+            tally(1, actualGame == selectedGame && stageID == counter && screenID == startScreenID && megaManRespawnFlag == selectedRespawnFlag) &&            
             screenID == bossScreen[counter] &&            
             bossHP == bossHPDead &&
             bossState == bossDefeatValue
     )
+    
 }
 
 
@@ -118,12 +122,12 @@ function MegaBusterCheevo(
                     ){ 
     if(selectedGame == 0x01){
         achievement(    
-            title = mmVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
+            title = megaManVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
             description = MegaBusterDescription(counter, bossNameList),
             points = 1,
             trigger =         
-                never(ctrlSelect > prev(ctrlSelect)) &&
-                actGame == selectedGame &&             
+                never(control["Select"] > prev(control["Select"])) &&
+                actualGame == selectedGame &&             
                 tally(1, (stageID == counter && prev(screenID) == bossScreen[counter] - 1 && screenID == bossScreen[counter])) &&
                 repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue)))&& (        
                         never(weaponQuantity[0] < prev(weaponQuantity[0])) &&                
@@ -139,12 +143,12 @@ function MegaBusterCheevo(
     }
     else if(selectedGame > 0x01){
        achievement(    
-            title = mmVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
+            title = megaManVersion[selectedGame - 1] + "Mega Buster " + bossNameList[counter],
             description = MegaBusterDescription(counter, bossNameList),
             points = 1,
             trigger =         
-                never(ctrlSelect > prev(ctrlSelect)) &&
-                actGame == selectedGame &&             
+                never(control["Select"] > prev(control["Select"])) &&
+                actualGame == selectedGame &&             
                 tally(1, (stageID == counter && prev(screenID) == bossScreen[counter] - 1 && screenID == bossScreen[counter])) &&
                 repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue)))&& (        
                         never(weaponQuantity[0] < prev(weaponQuantity[0])) &&                
@@ -165,17 +169,23 @@ function MegaBusterCheevo(
 
 
 // *    Damageless Boss Achievement
-function DmgsBsChev(actStgID, bNL, bDV){
+function DamagelesssBossCheevo(
+                        counter,                           
+                        selectedGame,                          
+                        stageID, screenID,  
+                        megaManHP,
+                        bossNameList, bossHP, bossHPDead, bossState, bossDefeatValue, bossScreen
+                    ){
     achievement(
-        title = mmVersion[0] + "Damageless " + bNL[actStgID],    
-        description = DamagelessBossDescription(actStgID, bNL), 
+        title = megaManVersion[selectedGame - 1] + "Damageless " + bossNameList[counter],    
+        description = DamagelessBossDescription(counter, bossNameList), 
         points = 1,
         trigger = 
-            never(ctrlSelect > prev(ctrlSelect)) &&
-            never(mm1PlayerHP < prev(mm1PlayerHP)) &&
-            actGame == 0x01 &&             
-            tally(1, (mm1StageID == actStgID && prev(mm1StageScreenID) == mm1BossScreen[actStgID] - 1 && mm1StageScreenID == mm1BossScreen[actStgID])) &&
-            repeated(0, (mm1BossHP == 0x00 && trigger_when(mm1BossState == bDV)))            
+            never(control["Select"] > prev(control["Select"])) &&
+            never(megaManHP < prev(megaManHP)) &&
+            actualGame == selectedGame &&             
+            tally(1, (stageID == counter && prev(screenID) == bossScreen[counter] - 1 && screenID == bossScreen[counter])) &&
+            repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue)))            
     )
 }
 
@@ -287,7 +297,13 @@ for counter in range(0, mm1BossRange){
             mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen,
             mm1Weapon
         )
-        DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[0])  
+        DamagelesssBossCheevo(
+            counter,            
+            0x01,
+            mm1StageID, mm1StageScreenID,
+            mm1PlayerHP,
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[0], mm1BossScreen
+        )  
     } 
 // *    Robot Master Stages
     else{    
@@ -317,7 +333,13 @@ for counter in range(0, mm1BossRange){
             mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen,
             mm1Weapon
         ) 
-        DmgsBsChev(counter, mm1BossNames, mm1BossDefeatValue[1])
+        DamagelesssBossCheevo(
+            counter, 
+            0x01,
+            mm1StageID, mm1StageScreenID,
+            mm1PlayerHP,
+            mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue[1], mm1BossScreen
+        )
     }       
 }
 
