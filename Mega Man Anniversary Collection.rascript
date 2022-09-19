@@ -161,7 +161,10 @@ function MegaBusterCheevo(
                         never(weaponQuantity[5] < prev(weaponQuantity[5])) &&
                         never(weaponQuantity[6] < prev(weaponQuantity[6])) &&
                         never(weaponQuantity[7] < prev(weaponQuantity[7])) &&
-                        never(weaponQuantity[8] < prev(weaponQuantity[8])) ||
+                        never(weaponQuantity[8] < prev(weaponQuantity[8])) &&
+                        never(weaponQuantity[9] < prev(weaponQuantity[9])) &&
+                        never(weaponQuantity[10] < prev(weaponQuantity[10])) &&
+                        never(weaponQuantity[11] != prev(weaponQuantity[11])) ||
                         always_false()        
                 )
         ) 
@@ -290,8 +293,8 @@ for counter in range(0, mm1BossRange){
             10,
             counter, 
             0x01, 
-            mm1StageID, mm1StageScreenID, 
-            mm1StartScreenID["Wily"], mm1RespawnFlg, 0xf0, 
+            mm1StageID, mm1StageScreenID, mm1StartScreenID["Wily"], 
+            mm1RespawnFlg, 0xf0, 
             mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Wily"], mm1BossScreen
         )
         MegaBusterCheevo(
@@ -318,9 +321,9 @@ for counter in range(0, mm1BossRange){
                 5,
                 counter, 
                 0x01, 
-                mm1StageID, mm1StageScreenID, 
-                mm1StartScreenID["Robot Master"], mm1RespawnFlg, 
-                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
+                mm1StageID, mm1StageScreenID, mm1StartScreenID["Robot Master"], 
+                mm1RespawnFlg, 0xf0, 
+                mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
             )
         }
 // *    Dr. Wily - Stage 1-3
@@ -329,9 +332,9 @@ for counter in range(0, mm1BossRange){
                 5,
                 counter, 
                 0x01, 
-                mm1StageID, mm1StageScreenID, 
-                mm1StartScreenID["Pre Wily"], mm1RespawnFlg, 
-                0xf0, mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
+                mm1StageID, mm1StageScreenID, mm1StartScreenID["Pre Wily"], 
+                mm1RespawnFlg, 0xf0, 
+                mm1BossNames, mm1BossHP, 0x00, mm1BossState, mm1BossDefeatValue["Boss beaten"], mm1BossScreen
             )
         }        
         MegaBusterCheevo(
@@ -361,14 +364,153 @@ for counter in range(0, mm1BossRange){
 ////////////////////////////////////////////////
 
 
-/////////////////////////////
-// MM2 - Description write function
+////////////
+// MM2 - Variables
 /////////////////////////////////////
+
+mm2BossNames = [//
+    "Heat Man", 
+    "Air Man", 
+    "Wood Man", 
+    "Bubble Man", 
+    "Quick Man", 
+    "Flash Man", 
+    "Metal Man", 
+    "Crash Man", 
+    "Mecha Dragon", 
+    "Picopico-Kun",
+    "Guts Tank",
+    "Boobeam Trap",
+    "Wily Machine #2",
+    "Alien"
+]
+mm2StartScreenID = {
+    "Robot Master": 0x00,
+    "Wily Stage 1-3, 5": 0x18,    
+    "Wily Stage 4, 6": 0x16
+}
+mm2BossScreen = [
+    0x17,   // Heat Man
+    0x15,   // Air Man
+    0x17,   // Wood Man
+    0x15,   // Bubble Man
+    0x17,   // Quick Man
+    0x13,   // Flash Man
+    0x15,   // Metal Man
+    0x13,   // Crash Man
+    0x2a,   // Mecha Dragon
+    0x27,   // Picopico-Kun
+    0x27,   // Guts Tank
+    0x26,   // Boobeam Trap
+    0x29,   // Wily Machine #2
+    0x1f    // Alien
+]
+mm2BossRange = length(mm2BossNames) - 1
+
+
+////////////
+// MM2 - Addresses
+/////////////////////////////////////
+
+// *    Game Info -> Variable
+mm2RespawnFlg = byte(0x1b64c9f)
+mm2StageID = byte(0xaed15c)
+mm2StageScreenID = byte(0xb61f98)
+mm2PlayerHP = byte(0xb62218)
+mm2PlayerLife = byte(0x2000b40)
+mm2BossHP = byte(0xb62219)
+mm2BossState = byte(0x2000b55)
+
+// *    Weapon Quanitity -> Variable
+mm2Weapon = [
+    byte(0x2000b34),   // Heat Man
+    byte(0x2000b35),   // Air Man
+    byte(0x2000b36),   // Wood Man
+    byte(0x2000b37),   // Bubble Man
+    byte(0x2000b38),   // Quick Man
+    byte(0x2000b39),   // Flash Man
+    byte(0x2000b3a),   // Metal Man
+    byte(0x2000b3b),   // Crash Man
+    byte(0x2000b3c),   // Item-1
+    byte(0x2000b3d),   // Item-2
+    byte(0x2000b3e),   // Item-3
+    byte(0x2000b44)    // Weapon Buffer
+]
 
 
 /////////////
 // MM2 - CALL
 /////////////////////////////////////
+
+for counter in range(0, mm2BossRange){
+// *    Dr. Wily - Stage 4 and Final
+    if(counter == mm2BossRange){    
+        StageClearCheevo(        
+            10,
+            counter, 
+            0x02, 
+            mm2StageID, mm2StageScreenID, mm2StartScreenID["Wily Stage 4, 6"], 
+            mm2RespawnFlg, 0x80, 
+            mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen
+        )
+        MegaBusterCheevo(
+            10,
+            counter, 
+            0x02,
+            mm2StageID, mm2StageScreenID,
+            mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen,
+            mm2Weapon
+        )
+        DamagelesssBossCheevo(
+            25,
+            counter,            
+            0x02,
+            mm2StageID, mm2StageScreenID,
+            mm2PlayerHP,
+            mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen
+        )  
+    } 
+// *    Robot Master Stages
+    else{    
+        if(counter >= 0 && counter <= 7){
+            StageClearCheevo(
+                5,
+                counter, 
+                0x02, 
+                mm2StageID, mm2StageScreenID, mm2StartScreenID["Robot Master"], 
+                mm2RespawnFlg, 0x80, 
+                mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen
+            )
+        }
+// *    Dr. Wily - Stage 1-3 and 5
+        else{            
+            StageClearCheevo(
+                5,
+                counter, 
+                0x02, 
+                mm2StageID, mm1StageScreenID, mm2StartScreenID["Wily Stage 1-3, 5"], 
+                mm2RespawnFlg, 0x80, 
+                mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen
+            )
+        }        
+        MegaBusterCheevo(
+            10,
+            counter, 
+            0x02,
+            mm2StageID, mm2StageScreenID,
+            mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen,
+            mm2Weapon
+        ) 
+        DamagelesssBossCheevo(
+            10,
+            counter, 
+            0x02,
+            mm2StageID, mm2StageScreenID,
+            mm2PlayerHP,
+            mm2BossNames, mm2BossHP, 0x00, mm2BossState, 0x01, mm2BossScreen
+        )
+    }       
+}
 
 
 ////////////////////////////////////////////////
