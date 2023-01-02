@@ -4,7 +4,7 @@
 //                                   //
 // Script made by xTr4ceur           //
 //                                   //
-// last change: 09/10/2022 2:52 pm   //
+// last change: 02/01/2023 22:09 pm  //
 //                                   //
 ///////////////////////////////////////
 
@@ -102,7 +102,6 @@ function StageClearCheevo(
     
 }
 
-
 // *    Mega Buster Achievement
 function MegaBusterCheevo(
                         cheevoPoints,
@@ -166,7 +165,6 @@ function MegaBusterCheevo(
     
 }
 
-
 // *    Damageless Boss Achievement
 function DamagelesssBossCheevo(
                         cheevoPoints,
@@ -189,7 +187,6 @@ function DamagelesssBossCheevo(
     )
 }
 
-
 // *    Damageless Stage Achievement
 function DamagelesssStageCheevo(
                         cheevoPoints,
@@ -206,6 +203,7 @@ function DamagelesssStageCheevo(
         trigger = false           
     )
 }
+
 
 
 //////////////////////////////////////////////////////////////
