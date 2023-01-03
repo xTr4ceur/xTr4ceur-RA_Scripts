@@ -91,9 +91,9 @@ function StageClearCheevo(
         description = "Beat " + bossName, 
         points = cheevoPoints,
         trigger = 
-            never(control["Select"] > prev(control["Select"])) &&
+            never(control["Select"] > prev(control["Select"])) &&            
+            never(actualGame != selectedGame) && 
             never(stageID != counter) &&
-            actualGame == selectedGame && 
             tally(1, screenID == startScreenID && megaManRespawnFlag == selectedRespawnFlag) &&            
             screenID == bossScreen &&            
             bossHP == bossHPDead &&
@@ -117,8 +117,9 @@ function MegaBusterCheevo(
             description = "Beat " + bossName + " with Mega Buster only",
             points = cheevoPoints,
             trigger =   
-                actualGame == selectedGame &&             
-                tally(1, (stageID == counter && prev(screenID) == bossScreen - 1 && screenID == bossScreen)) &&
+                never(actualGame != selectedGame) &&
+                never(stageID != counter) && 
+                tally(1, (prev(screenID) == bossScreen - 1 && screenID == bossScreen)) &&
                 repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue))) && 
                 (     
                         never(control["Select"] > prev(control["Select"])) &&
@@ -140,8 +141,9 @@ function MegaBusterCheevo(
             description = "Beat " + bossName + " with Mega Buster only",
             points = cheevoPoints,
             trigger =
-                actualGame == selectedGame &&             
-                tally(1, (stageID == counter && prev(screenID) == bossScreen - 1 && screenID == bossScreen)) &&
+                never(actualGame != selectedGame) && 
+                never(stageID != counter) &&
+                tally(1, (prev(screenID) == bossScreen - 1 && screenID == bossScreen)) &&
                 repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue))) && 
                 (   
                         never(control["Select"] > prev(control["Select"])) &&
@@ -181,11 +183,72 @@ function DamagelesssBossCheevo(
         trigger = 
             never(control["Select"] > prev(control["Select"])) &&
             never(megaManHP < prev(megaManHP)) &&
-            actualGame == selectedGame &&             
-            tally(1, (stageID == counter && prev(screenID) == bossScreen - 1 && screenID == bossScreen)) &&
+            never(actualGame != selectedGame) && 
+            never(stageID != counter) &&
+            tally(1, (prev(screenID) == bossScreen - 1 && screenID == bossScreen)) &&
             repeated(0, (bossHP == bossHPDead && trigger_when(bossState == bossDefeatValue)))            
     )
 }
+
+// *    Mega Buster Stage Achievement
+function MegaBusterStageCheevo(
+                        cheevoPoints,
+                        counter,                         
+                        selectedGame,                          
+                        stageID, screenID, startScreenID, scrollValue, 
+                        megaManHP, megaManRespawnFlag, selectedRespawnFlag,
+                        bossName, screenTransition, bossScreen,
+                        weaponQuantity, playerLife
+                    ){
+    if(counter != 0x09){                
+        achievement(
+            title = megaManValues[selectedGame]["Version"] + "Stage Buster Master: " + bossName,    
+            description = "Reach the Boss room in " + bossName + "'s Stage with Mega Buster only", 
+            points = cheevoPoints,
+            trigger =            
+                never(actualGame != selectedGame) &&
+                never(stageID != counter) &&             
+                tally(1, screenID == startScreenID  && megaManRespawnFlag == selectedRespawnFlag) &&
+                repeated(0, (screenID == bossScreen - 1 && screenTransition > prev(screenTransition) && trigger_when(screenTransition == mm1BossValues[counter]["Scroll"]))) &&
+                (
+                    never(control["Select"] > prev(control["Select"])) &&
+                    never(prev(playerLife) > playerLife) &&
+                    never(weaponQuantity[0] < prev(weaponQuantity[0])) &&                
+                    never(weaponQuantity[1] < prev(weaponQuantity[1])) &&
+                    never(weaponQuantity[2] < prev(weaponQuantity[2])) &&
+                    never(weaponQuantity[3] < prev(weaponQuantity[3])) &&
+                    never(weaponQuantity[4] < prev(weaponQuantity[4])) &&
+                    never(weaponQuantity[5] < prev(weaponQuantity[5])) &&
+                    never(weaponQuantity[6] < prev(weaponQuantity[6])) ||                
+                    always_false()
+                )
+        )
+    }
+    else{
+    achievement(
+        title = megaManValues[selectedGame]["Version"] + "Stage Buster Master: " + bossName,    
+        description = "Reach the Boss room in " + bossName + "'s Stage with Mega Buster only (except Super Arm)", 
+        points = cheevoPoints,
+        trigger =            
+            never(actualGame != selectedGame) &&
+            never(stageID != counter) &&             
+            tally(1, screenID == startScreenID  && megaManRespawnFlag == selectedRespawnFlag) &&
+            repeated(0, (screenID == bossScreen - 1 && screenTransition > prev(screenTransition) && trigger_when(screenTransition == mm1BossValues[counter]["Scroll"]))) &&
+            (
+                never(control["Select"] > prev(control["Select"])) &&
+                never(prev(playerLife) > playerLife) &&
+                never(weaponQuantity[0] < prev(weaponQuantity[0])) &&                
+                never(weaponQuantity[1] < prev(weaponQuantity[1])) &&
+                never(weaponQuantity[2] < prev(weaponQuantity[2])) &&
+                never(weaponQuantity[3] < prev(weaponQuantity[3])) &&
+                never(weaponQuantity[4] < prev(weaponQuantity[4])) &&
+                never(weaponQuantity[6] < prev(weaponQuantity[6])) ||                
+                always_false()
+            )
+    )    
+    }
+}
+
 
 // *    Damageless Stage Achievement
 function DamagelesssStageCheevo(
@@ -198,7 +261,7 @@ function DamagelesssStageCheevo(
                     ){
     achievement(
         title = megaManValues[selectedGame]["Version"] + "Stage Strategist: " + bossName,    
-        description = "Reach the Boss door in " + bossName + "'s Stage without being harmed", 
+        description = "Reach the Boss room in " + bossName + "'s Stage without being harmed", 
         points = cheevoPoints,
         trigger = false           
     )
@@ -218,21 +281,21 @@ function DamagelesssStageCheevo(
 //----------------------------------------------------------//
 //  Ice Man         0x01        0x17            0x02        //
 //----------------------------------------------------------//
-//  Bomb Man        0x02        0x17            0x..        //
+//  Bomb Man        0x02        0x17            0x03        //
 //----------------------------------------------------------//
-//  Fire Man        0x03        0x13            0x..        //
+//  Fire Man        0x03        0x13            0x02        //
 //----------------------------------------------------------//
 //  Elec Man        0x04        0x17            0x01        //
 //----------------------------------------------------------//
-//  Guts Man        0x05        0x12            0x..        //
+//  Guts Man        0x05        0x12            0x02        //
 //----------------------------------------------------------//
-//  Yellow Devil    0x06        0x27            0x..        //
+//  Yellow Devil    0x06        0x27            0x02        //
 //----------------------------------------------------------//
-//  Copy Robot      0x07        0x29            0x..        //
+//  Copy Robot      0x07        0x29            0x03        //
 //----------------------------------------------------------//
-//  CWU-01P         0x08        0x2f            0x..        //
+//  CWU-01P         0x08        0x2f            0x02        //
 //----------------------------------------------------------//
-//  Wily Machine #1 0x09        0x23            0x..        //
+//  Wily Machine #1 0x09        0x23            0x02        //
 //////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////
@@ -275,27 +338,28 @@ mm1CheevoValues = {
 // Scroll Value Outstanding
 mm1BossValues = {
     //  Cut Man
-    0x00:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x01, "Boss Screen":0x17},
+    0x00:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x17},
     //  Ice Man
-    0x01:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x01, "Boss Screen":0x17},
+    0x01:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x17},
     //  Bomb Man
-    0x02:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x01, "Boss Screen":0x17},
+    0x02:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x03, "Boss Screen":0x17},
     //  Fire Man
-    0x03:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x01, "Boss Screen":0x13},
+    0x03:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x13},
     //  Elec Man
     0x04:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x01, "Boss Screen":0x17},
     //  Guts Man
-    0x05:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x01, "Boss Screen":0x12},
+    0x05:{"Defeat":0x0f, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x12},
     //  Yellow Devil
-    0x06:{"Defeat":0x0f, "Start Screen":0x18, "Scroll":0x01, "Boss Screen":0x27},
+    0x06:{"Defeat":0x0f, "Start Screen":0x18, "Scroll":0x02, "Boss Screen":0x27},
     // Copy Robot
-    0x07:{"Defeat":0x0f, "Start Screen":0x18, "Scroll":0x01, "Boss Screen":0x29},
+    0x07:{"Defeat":0x0f, "Start Screen":0x18, "Scroll":0x03, "Boss Screen":0x29},
     //  CWU-01P
-    0x08:{"Defeat":0x0f, "Start Screen":0x18, "Scroll":0x01, "Boss Screen":0x2f},
+    0x08:{"Defeat":0x0f, "Start Screen":0x18, "Scroll":0x02, "Boss Screen":0x2f},
     //  Dr. Wily Machine #1
-    0x09:{"Defeat":0x0d, "Start Screen":0x14, "Scroll":0x01, "Boss Screen":0x23}
+    0x09:{"Defeat":0x0d, "Start Screen":0x14, "Scroll":0x02, "Boss Screen":0x23}
 }
 
+mm1BossRange = 0x09
 
 ////////////
 // MM1 - Addresses
@@ -306,9 +370,9 @@ mm1RespawnFlg = byte(0x1c11256)         // 0xf0
 mm1StageID = byte(0x2000ac9)        
 mm1StageScreenID = byte(0xb61fb8)
 mm1ScreenTransition = byte(0x2000abe)   // 0x02 (Left -> Right)
-mm1PlayerHP = byte(0x2000b02)           // 0x00 -> 0x1c
+mm1PlayerHP = byte(0x2000b02)           // 0x00 - 0x1c
 mm1PlayerLife = byte(0x2000b3e)
-mm1BossHP = byte(0xb62219)              // 0x00 -> 0x1c
+mm1BossHP = byte(0xb62219)              // 0x00 - 0x1c
 mm1BossState = byte(0x19a428)           // 0x0d = Wily, 0x0f = Rest
 
 // *    Weapon Quanitity -> Variable
@@ -329,48 +393,64 @@ mm1Weapon = [
 
 // *    Stage Clear Achievement
 //////////////////////////////////////
-for counter in range(0, 0x09){ 
-        StageClearCheevo(
-            mm1CheevoValues[counter]["Clear Points"],            
-            counter, 
-            0x00,
-            mm1StageID, mm1StageScreenID, mm1BossValues[counter]["Start Screen"], 
-            mm1RespawnFlg, 0xf0,
-            mm1CheevoValues[counter]["Name"], mm1BossHP, 0x00, mm1BossState, mm1BossValues[counter]["Defeat"], mm1BossValues[counter]["Boss Screen"]           
-        )
-         
+for counter in range(0, mm1BossRange){ 
+    StageClearCheevo(
+        mm1CheevoValues[counter]["Clear Points"],            
+        counter, 
+        0x00,
+        mm1StageID, mm1StageScreenID, mm1BossValues[counter]["Start Screen"], 
+        mm1RespawnFlg, 0xf0,
+        mm1CheevoValues[counter]["Name"], mm1BossHP, 0x00, mm1BossState, mm1BossValues[counter]["Defeat"], mm1BossValues[counter]["Boss Screen"]           
+    )         
 }
 
 // *    Mega Buster Achievement
 //////////////////////////////////////
-for counter in range(0, 0x09){
-      MegaBusterCheevo(
-            mm1CheevoValues[counter]["MB Points"],
-            counter, 
-            0x00,
-            mm1StageID, mm1StageScreenID,
-            mm1CheevoValues[counter]["Name"], mm1BossHP, 0x00, mm1BossState, mm1BossValues[counter]["Defeat"], mm1BossValues[counter]["Boss Screen"],
-            mm1Weapon, mm1PlayerLife
-        )       
+for counter in range(0, mm1BossRange){
+    MegaBusterCheevo(
+        mm1CheevoValues[counter]["MB Points"],
+        counter, 
+        0x00,
+        mm1StageID, mm1StageScreenID,
+        mm1CheevoValues[counter]["Name"], mm1BossHP, 0x00, mm1BossState, mm1BossValues[counter]["Defeat"], mm1BossValues[counter]["Boss Screen"],
+        mm1Weapon, mm1PlayerLife
+    )       
 } 
 
 // *    Damageless Boss Achievement
 //////////////////////////////////////
-for counter in range(0, 0x09){
-        DamagelesssBossCheevo(
-            mm1CheevoValues[counter]["DMGless Points"],
-            counter,            
-            0x00,
-            mm1StageID, mm1StageScreenID,
-            mm1PlayerHP,
-            mm1CheevoValues[counter]["Name"], mm1BossHP, 0x00, mm1BossState, mm1BossValues[counter]["Defeat"], mm1BossValues[counter]["Boss Screen"]
-        )      
+for counter in range(0, mm1BossRange){
+    DamagelesssBossCheevo(    
+        mm1CheevoValues[counter]["DMGless Points"],
+        counter,            
+        0x00,
+        mm1StageID, mm1StageScreenID,
+        mm1PlayerHP,
+        mm1CheevoValues[counter]["Name"], mm1BossHP, 0x00, mm1BossState, mm1BossValues[counter]["Defeat"], mm1BossValues[counter]["Boss Screen"]
+    )      
 } 
+
+// *    Mega Buster Stage Achievement
+//////////////////////////////////////
+for counter in range(0, mm1BossRange){
+    if(counter != 0x06){
+        MegaBusterStageCheevo(        
+            mm1CheevoValues[counter]["DMGless Stage Points"],
+            counter,                         
+            0x00,                          
+            mm1StageID, mm1StageScreenID, mm1BossValues[counter]["Start Screen"], mm1BossValues[counter]["Scroll"], 
+            mm1PlayerHP, mm1RespawnFlg, 0xf0,
+            mm1CheevoValues[counter]["Name"], mm1ScreenTransition, mm1BossValues[counter]["Boss Screen"],
+            mm1Weapon, mm1PlayerLife
+        )
+    }
+}
+
 
 
 // *    Damageless Stage Achievement
 //////////////////////////////////////
-for counter in range(0, 0x09){    
+for counter in range(0, mm1BossRange){    
         DamagelesssStageCheevo(
             mm1CheevoValues[counter]["DMGless Stage Points"],
             counter,
