@@ -197,7 +197,7 @@ function DamagelesssStageCheevo(
                         stageID, screenID, startScreenID, scrollValue, 
                         megaManHP, megaManLife, megaManRespawnFlag, selectedRespawnFlag,
                         bossName, screenTransition, bossScreen
-                    ){
+                    ){ 
     achievement(    
         title = Gv_megaManValues[selectedGame]["Version"] + "Stage Strategist: " + bossName,    
         description = "Reach the Boss room in " + bossName + "'s Stage without being harmed", 
@@ -220,29 +220,7 @@ function DamagelesssStageCheevo(
 //          Mega Man I - Achievements                       //
 //                                                          //
 //////////////////////////////////////////////////////////////
-//  Boss            StageID     StageScreenID   ScrollValue //
-//                              (BossRoom)                  //
-//----------------------------------------------------------//
-//  Cut Man         0x00        0x17            0x02        //
-//----------------------------------------------------------//
-//  Ice Man         0x01        0x17            0x02        //
-//----------------------------------------------------------//
-//  Bomb Man        0x02        0x17            0x03        //
-//----------------------------------------------------------//
-//  Fire Man        0x03        0x13            0x02        //
-//----------------------------------------------------------//
-//  Elec Man        0x04        0x17            0x01        //
-//----------------------------------------------------------//
-//  Guts Man        0x05        0x12            0x02        //
-//----------------------------------------------------------//
-//  Yellow Devil    0x06        0x27            0x02        //
-//----------------------------------------------------------//
-//  Copy Robot      0x07        0x29            0x03        //
-//----------------------------------------------------------//
-//  CWU-01P         0x08        0x2f            0x02        //
-//----------------------------------------------------------//
-//  Wily Machine #1 0x09        0x23            0x02        //
-//////////////////////////////////////////////////////////////
+
 
 ////////////////////////////////////////////////////////
 //  Extra Live Location                               //
@@ -263,26 +241,26 @@ function DamagelesssStageCheevo(
 /////////////////////////////////////
 
 v_mm1CheevoValues = {
-    //  Cut Man
-    0x00:{"Name":"Cut Man", "Clear Points":5, "MB Points":2, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Ice Man    
-    0x01:{"Name":"Ice Man", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Bomb Man
-    0x02:{"Name":"Bomb Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Fire Man
-    0x03:{"Name":"Fire Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Elec Man
-    0x04:{"Name":"Elec Man", "Clear Points":5, "MB Points":10, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Guts Man
-    0x05:{"Name":"Guts Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Yellow Devil
-    0x06:{"Name":"Yellow Devil", "Clear Points":10, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
-    // Copy Robot
-    0x07:{"Name":"Copy Robot", "Clear Points":10, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  CWU-01P
-    0x08:{"Name":"CWU-01P", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Dr. Wily Machine #1
-    0x09:{"Name":"Dr. Wily Machine #1", "Clear Points":25, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0}
+    0x00:{"Name":"Cut Man", 
+            "Clear Points":5, "MB Points":2, "DMGless Points":10, "DMGless Stage Points":0},
+    0x01:{"Name":"Ice Man", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x02:{"Name":"Bomb Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x03:{"Name":"Fire Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x04:{"Name":"Elec Man", 
+            "Clear Points":5, "MB Points":10, "DMGless Points":10, "DMGless Stage Points":0},
+    0x05:{"Name":"Guts Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x06:{"Name":"Yellow Devil", 
+            "Clear Points":10, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
+    0x07:{"Name":"Copy Robot", 
+            "Clear Points":10, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x08:{"Name":"CWU-01P", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x09:{"Name":"Dr. Wily Machine #1", 
+            "Clear Points":25, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0}
 }
 
 v_mm1BossValues = {
@@ -402,37 +380,6 @@ for counter in range(0, c_mm1BossRange){
 //          Mega Man II - Achievements        //
 //                                            //
 ////////////////////////////////////////////////
-//  Boss            StageID     StageScreenID //
-//                              (BossRoom)    //
-//--------------------------------------------//
-//  Heat Man        0x00        0x17          //
-//--------------------------------------------//
-//  Air Man         0x01        0x15          //
-//--------------------------------------------//
-//  Wood Man        0x02        0x17          //
-//--------------------------------------------//  
-//  Bubble Man      0x03        0x15          //
-//--------------------------------------------//
-//  Quick Man       0x04        0x17          //
-//--------------------------------------------//
-//  Flash Man       0x05        0x13          //
-//--------------------------------------------//
-//  Metal Man       0x06        0x15          //
-//--------------------------------------------//      
-//  Crash Man       0x07        0x13          //
-//--------------------------------------------//
-//  Mecha Dragon    0x08        0x2a          //
-//--------------------------------------------//
-//  Picopico-Kun    0x09        0x27          //
-//--------------------------------------------//
-//  Guts Tank       0x0a        0x27          //
-//--------------------------------------------//
-//  Boobeam Trap    0x0b        0x26          //
-//--------------------------------------------//
-//  Wily Machine #2 0x0c        0x29          //
-//--------------------------------------------//
-//  Alien           0x0d        0x1f          //
-////////////////////////////////////////////////
 
 
 ////////////
@@ -440,34 +387,34 @@ for counter in range(0, c_mm1BossRange){
 /////////////////////////////////////
 
 v_mm2CheevoValues = {
-    //  Heat Man
-    0x00:{"Name":"Heat Man", "Clear Points":5, "MB Points":2, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Air Man    
-    0x01:{"Name":"Air Man", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Wood Man
-    0x02:{"Name":"Wood Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Bubble Man
-    0x03:{"Name":"Bubble Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Quick Man
-    0x04:{"Name":"Quick Man", "Clear Points":5, "MB Points":10, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Flash Man
-    0x05:{"Name":"Flash Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Metal Man
-    0x06:{"Name":"Metal Man", "Clear Points":10, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
-    //  Crash Man
-    0x07:{"Name":"Crash Man", "Clear Points":10, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Mecha Dragon
-    0x08:{"Name":"Mecha Dragon", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Picopico-Kun
-    0x09:{"Name":"Picopico-Kun", "Clear Points":25, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
-    //  Guts Tank
-    0x0a:{"Name":"Guts Tank", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Boobeam Trap
-    0x0b:{"Name":"Boobeam Trap", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Dr. Wily Machine #2
-    0x0c:{"Name":"Dr. Wily Machine #2", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Alien
-    0x0d:{"Name":"Alien", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0}
+    0x00:{"Name":"Heat Man", 
+            "Clear Points":5, "MB Points":2, "DMGless Points":10, "DMGless Stage Points":0},   
+    0x01:{"Name":"Air Man",     
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x02:{"Name":"Wood Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x03:{"Name":"Bubble Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x04:{"Name":"Quick Man", 
+            "Clear Points":5, "MB Points":10, "DMGless Points":10, "DMGless Stage Points":0},
+    0x05:{"Name":"Flash Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x06:{"Name":"Metal Man", 
+            "Clear Points":10, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
+    0x07:{"Name":"Crash Man", 
+            "Clear Points":10, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x08:{"Name":"Mecha Dragon", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x09:{"Name":"Picopico-Kun", 
+            "Clear Points":25, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
+    0x0a:{"Name":"Guts Tank", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x0b:{"Name":"Boobeam Trap", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x0c:{"Name":"Dr. Wily Machine #2", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x0d:{"Name":"Alien", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":1}
 }
 
 v_mm2BossValues = {
@@ -488,9 +435,9 @@ v_mm2BossValues = {
     //  Crash Man
     0x07:{"Defeat":0x01, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x13},
     //  Mecha Dragon
-    0x08:{"Defeat":0x01, "Start Screen":0x18, "Scroll":0x02, "Boss Screen":0x2a},
+    0x08:{"Defeat":0x01, "Start Screen":0x18, "Scroll":0x01, "Boss Screen":0x2a},
     //  Picopico-Kun
-    0x09:{"Defeat":0x01, "Start Screen":0x18, "Scroll":0x02, "Boss Screen":0x27},
+    0x09:{"Defeat":0x01, "Start Screen":0x18, "Scroll":0x03, "Boss Screen":0x27},
     //  Guts Tank
     0x0a:{"Defeat":0x01, "Start Screen":0x18, "Scroll":0x02, "Boss Screen":0x27},
     //  Boobeam Trap
@@ -558,19 +505,21 @@ for counter in range(0, c_mm2BossRange){
 // *    MM II - Mega Buster Achievement
 //////////////////////////////////////////////
 for counter in range(0, c_mm2BossRange){
-    MegaBusterCheevo(
-        v_mm2CheevoValues[counter]["MB Points"],
-        counter, 
-        Gv_megaManValues[1]["GameID"],
-        a_mm2StageID, a_mm2StageScreenID,
-        v_mm2CheevoValues[counter]["Name"], a_mm2BossHP, c_mm2BossDeadHP, a_mm2BossState, v_mm2BossValues[counter]["Defeat"], v_mm2BossValues[counter]["Boss Screen"],
-        a_mm2Weapon, a_mm2PlayerLife
-    )       
+    if(counter != c_mm2BossRange){
+         MegaBusterCheevo(
+            v_mm2CheevoValues[counter]["MB Points"],
+            counter, 
+            Gv_megaManValues[1]["GameID"],
+            a_mm2StageID, a_mm2StageScreenID,
+            v_mm2CheevoValues[counter]["Name"], a_mm2BossHP, c_mm2BossDeadHP, a_mm2BossState, v_mm2BossValues[counter]["Defeat"], v_mm2BossValues[counter]["Boss Screen"],
+            a_mm2Weapon, a_mm2PlayerLife
+        )   
+    }           
 } 
 
 // *    MM II - Damageless Boss Achievement
 //////////////////////////////////////////////
-for counter in range(0, c_mm2BossRange){
+for counter in range(0, c_mm2BossRange){    
     DamagelesssBossCheevo(      
         v_mm2CheevoValues[counter]["DMGless Points"],
         counter,            
@@ -583,8 +532,9 @@ for counter in range(0, c_mm2BossRange){
 
 // *    MM II - Damageless Stage Achievement
 //////////////////////////////////////////////
-for counter in range(0, c_mm2BossRange){    
-        DamagelesssStageCheevo(
+for counter in range(0, c_mm2BossRange){
+    if(counter != 0x0c && counter != 0x08){
+        DamagelesssStageCheevo(        
             v_mm2CheevoValues[counter]["DMGless Stage Points"],
             counter,
             Gv_megaManValues[1]["GameID"],
@@ -592,6 +542,18 @@ for counter in range(0, c_mm2BossRange){
             a_mm2PlayerHP, a_mm2PlayerLife, a_mm2RespawnFlg, c_mm2RespawnFlag,
             v_mm2CheevoValues[counter]["Name"], a_mm2ScreenTransition, v_mm2BossValues[counter]["Boss Screen"]
         )    
+    } 
+    // Mecha Dragon extra condition
+    if(counter == 0x08){
+        DamagelesssStageCheevo(        
+            v_mm2CheevoValues[counter]["DMGless Stage Points"],
+            counter,
+            Gv_megaManValues[1]["GameID"],
+            a_mm2StageID, a_mm2StageScreenID, v_mm2BossValues[counter]["Start Screen"], v_mm2BossValues[counter]["Scroll"],
+            a_mm2PlayerHP, a_mm2PlayerLife, a_mm2RespawnFlg, c_mm2RespawnFlag,
+            v_mm2CheevoValues[counter]["Name"], a_mm2ScreenTransition, v_mm2BossValues[counter]["Boss Screen"] - 4
+        )    
+    }
 } 
 
 //////////////////////////////////
@@ -607,76 +569,45 @@ for counter in range(0, c_mm2BossRange){
 //          Mega Man III - Achievements       //
 //                                            //
 ////////////////////////////////////////////////
-//  Boss            StageID     StageScreenID //
-//                              (BossRoom)    //
-//--------------------------------------------//
-//  Heat Man        0x00        0x17          //
-//--------------------------------------------//
-//  Air Man         0x01        0x15          //
-//--------------------------------------------//
-//  Wood Man        0x02        0x17          //
-//--------------------------------------------//  
-//  Bubble Man      0x03        0x15          //
-//--------------------------------------------//
-//  Quick Man       0x04        0x17          //
-//--------------------------------------------//
-//  Flash Man       0x05        0x13          //
-//--------------------------------------------//
-//  Metal Man       0x06        0x15          //
-//--------------------------------------------//      
-//  Crash Man       0x07        0x13          //
-//--------------------------------------------//
-//  Mecha Dragon    0x08        0x2a          //
-//--------------------------------------------//
-//  Picopico-Kun    0x09        0x27          //
-//--------------------------------------------//
-//  Guts Tank       0x0a        0x27          //
-//--------------------------------------------//
-//  Boobeam Trap    0x0b        0x26          //
-//--------------------------------------------//
-//  Wily Machine #2 0x0c        0x29          //
-//--------------------------------------------//
-//  Alien           0x0d        0x1f          //
-////////////////////////////////////////////////
 
 
 ////////////
 // MM III - Variables
 /////////////////////////////////////
 
-v_mm2CheevoValues = {
-    //  Heat Man
-    0x00:{"Name":"Heat Man", "Clear Points":5, "MB Points":2, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Air Man    
-    0x01:{"Name":"Air Man", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Wood Man
-    0x02:{"Name":"Wood Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Bubble Man
-    0x03:{"Name":"Bubble Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Quick Man
-    0x04:{"Name":"Quick Man", "Clear Points":5, "MB Points":10, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Flash Man
-    0x05:{"Name":"Flash Man", "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Metal Man
-    0x06:{"Name":"Metal Man", "Clear Points":10, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
-    //  Crash Man
-    0x07:{"Name":"Crash Man", "Clear Points":10, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Mecha Dragon
-    0x08:{"Name":"Mecha Dragon", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Picopico-Kun
-    0x09:{"Name":"Picopico-Kun", "Clear Points":25, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
-    //  Guts Tank
-    0x0a:{"Name":"Guts Tank", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Boobeam Trap
-    0x0b:{"Name":"Boobeam Trap", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Dr. Wily Machine #2
-    0x0c:{"Name":"Dr. Wily Machine #2", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
-    //  Alien
-    0x0d:{"Name":"Alien", "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0}
+v_mm3CheevoValues = {    
+    0x00:{"Name":"Needle Man", 
+            "Clear Points":5, "MB Points":2, "DMGless Points":10, "DMGless Stage Points":0},        
+    0x01:{"Name":"Air Man", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x02:{"Name":"Wood Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x03:{"Name":"Bubble Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x04:{"Name":"Quick Man", 
+            "Clear Points":5, "MB Points":10, "DMGless Points":10, "DMGless Stage Points":0},
+    0x05:{"Name":"Flash Man", 
+            "Clear Points":5, "MB Points":3, "DMGless Points":10, "DMGless Stage Points":0},
+    0x06:{"Name":"Metal Man", 
+            "Clear Points":10, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
+    0x07:{"Name":"Crash Man", 
+            "Clear Points":10, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x08:{"Name":"Mecha Dragon", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x09:{"Name":"Picopico-Kun", 
+            "Clear Points":25, "MB Points":10, "DMGless Points":25, "DMGless Stage Points":0},
+    0x0a:{"Name":"Guts Tank", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x0b:{"Name":"Boobeam Trap", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x0c:{"Name":"Dr. Wily Machine #2", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0},
+    0x0d:{"Name":"Alien", 
+            "Clear Points":5, "MB Points":5, "DMGless Points":10, "DMGless Stage Points":0}
 }
 
-v_mm2BossValues = {
-    //  Heat Man
+v_mm3BossValues = {
+    //  Needle Man
     0x00:{"Defeat":0x01, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x17},
     //  Air Man
     0x01:{"Defeat":0x01, "Start Screen":0x00, "Scroll":0x02, "Boss Screen":0x15},
@@ -707,7 +638,7 @@ v_mm2BossValues = {
 }
 
 // MM III Constants
-c_mm2BossRange = length(v_mm2BossValues) - 1
+c_mm3BossRange = length(v_mm3BossValues) - 1
 c_mm2RespawnFlag = 0x80
 c_mm2BossDeadHP = 0x00
 
